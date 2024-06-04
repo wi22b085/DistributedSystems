@@ -44,20 +44,20 @@ public class RecieveCustomerData {
         String[] parts = message.split(",");
         int customerId = Integer.parseInt(parts[0].split(":")[1].trim());
         List<ChargeEntity> output=new ArrayList<>();
-        if (message.contains("-station1-db")){
+        if (message.contains("30011")){
              output = jdbcTemplate1.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
                     rs.getInt("customerid")
             ),customerId);
-        } else if (message.contains("-station2-db")) {
+        } else if (message.contains("30012")) {
            output = jdbcTemplate2.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
                     rs.getInt("customerid")
             ),customerId);
 
-        } else if (message.contains("-station3-db")) {
+        } else if (message.contains("30013")) {
             output = jdbcTemplate3.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),

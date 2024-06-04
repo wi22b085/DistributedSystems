@@ -13,7 +13,7 @@ public class DataSourceConfig {
     @Bean(name="Db1")
     public JdbcTemplate jdbcTemplate1(){
         HikariConfig hikariConfig=new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5432/springrest-station1-db");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:30011/springrest-stationdb");
         hikariConfig.setUsername("postgres");
         hikariConfig.setPassword("postgres");
         DataSource dataSource=new HikariDataSource(hikariConfig);
@@ -22,7 +22,7 @@ public class DataSourceConfig {
     @Bean(name="Db2")
     public JdbcTemplate jdbcTemplate2(){
         HikariConfig hikariConfig=new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5433/springrest-station2-db");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:30012/springrest-stationdb");
         hikariConfig.setUsername("postgres");
         hikariConfig.setPassword("postgres");
         DataSource dataSource=new HikariDataSource(hikariConfig);
@@ -31,7 +31,7 @@ public class DataSourceConfig {
     @Bean(name="Db3")
     public JdbcTemplate jdbcTemplate3(){
         HikariConfig hikariConfig=new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5434/springrest-station3-db");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:30013/springrest-stationdb");
         hikariConfig.setUsername("postgres");
         hikariConfig.setPassword("postgres");
         DataSource dataSource=new HikariDataSource(hikariConfig);
