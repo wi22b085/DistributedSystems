@@ -1,4 +1,4 @@
-package com.example.stationdatacollector.config;
+package com.example.springbootapp.config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -15,22 +15,12 @@ public class RabbitMQConfig {
 
 
     public static final String ECHO_IN_QUEUE_ID = "sendCustomerDetails";
-    public static final String ECHO_IN_URL_ID = "sendUrlDetails";
-    public static final String ECHO_OUT_QUEUE_VALUE = "sendValue";
-
 
     @Bean
     public Queue echoInQueue() {
         return new Queue(ECHO_IN_QUEUE_ID, false);
     }
-    @Bean
-    public Queue echoInUrl() {
-        return new Queue(ECHO_IN_URL_ID, false);
-    }
-    @Bean
-    public Queue echoOutValue() {
-        return new Queue(ECHO_OUT_QUEUE_VALUE, false);
-    }
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
@@ -43,8 +33,7 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-        rabbitTemplate.setDefaultReceiveQueue(ECHO_IN_URL_ID);
+        rabbitTemplate.setDefaultReceiveQueue(ECHO_IN_QUEUE_ID);
         return rabbitTemplate;
     }
-
 }

@@ -3,20 +3,20 @@ package com.example.stationdatacollector.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity(name = "customerDetails")
+@Entity(name = "charge")
 public class ChargeEntity {
     public ChargeEntity(int id, double kwh, int customerId) {
         this.id = id;
         this.customerId = customerId;
         this.kwh = kwh;
     }
+    public ChargeEntity() {
+    }
 
     @Id
     private int id;
     private int customerId;
     private double kwh;
-
-
     public int getId() {
         return id;
     }

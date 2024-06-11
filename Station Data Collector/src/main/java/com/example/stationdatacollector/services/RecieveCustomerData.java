@@ -33,13 +33,15 @@ public class RecieveCustomerData {
         this.jdbcTemplate3=jdbcTemplate3;
 
     }
-    @RabbitListener(queues = {RabbitMQConfig.ECHO_IN_QUEUE_CUSTOMER_DETALS,RabbitMQConfig.ECHO_OUT_DB_DATA})
+    @RabbitListener(queues = RabbitMQConfig.ECHO_IN_URL_ID)
     public void getCustomerData(String message) {
+        System.out.println(message);
         var sql= """
-                    SELECT id, customerid,kwh
-                    fROM Charge 
-                    Where customerid=?
+                    SELECT id, kwh,customer_id
+                    FROM Charge 
+                    Where customer_id=?
                     """;
+
 
         String[] parts = message.split(",");
         int customerId = Integer.parseInt(parts[0].split(":")[1].trim());
@@ -48,34 +50,31 @@ public class RecieveCustomerData {
              output = jdbcTemplate1.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
-                    rs.getInt("customerid")
-            ),customerId);
+                     rs.getInt("customer_id")
+                     ),customerId);
         } else if (message.contains("30012")) {
            output = jdbcTemplate2.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
-                    rs.getInt("id"),
-                    rs.getDouble("kwh"),
-                    rs.getInt("customerid")
+                   rs.getInt("id"),
+                   rs.getDouble("kwh"),
+                   rs.getInt("customer_id")
             ),customerId);
 
         } else if (message.contains("30013")) {
             output = jdbcTemplate3.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
-                    rs.getInt("customerid")
+                    rs.getInt("customer_id")
             ),customerId);
         }
-        double sum = output.stream()
-                .mapToDouble(ChargeEntity::getKwh)
-                .sum();
-        // Delay
-        try {
-            Thread.sleep(message.length() * 1000L);
-        } catch (InterruptedException e) {
-            System.out.println("Delete2ndChar service interrupted");
+        double sum=0;
+        for (ChargeEntity out : output) {
+            sum+=out.getKwh();
         }
-        String msg="summe:"+sum+",customerId:"+customerId;
 
-        rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_QUEUE_NAME, msg );
+        String msg="summe:"+sum+",customerId:"+customerId;
+        System.out.println(msg);
+
+        rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE, msg );
 
     }
 }
