@@ -24,4 +24,6 @@ public class CustomerController {
         rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id );
     }
 
+
+
 }

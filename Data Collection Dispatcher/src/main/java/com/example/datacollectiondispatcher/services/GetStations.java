@@ -29,12 +29,6 @@ public class GetStations {
                         serverEntities.getDb_url()
                 )
         ).toList();
-        // Delay
-        try {
-            Thread.sleep(message.length() * 1000L);
-        } catch (InterruptedException e) {
-            System.out.println("Delete2ndChar service interrupted");
-        }
         String temp;
         for (ServerEntities server : servers) {
             temp="customer:"+message+",url:"+server.getDb_url();

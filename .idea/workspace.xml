@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ccac039-afe7-4071-be9c-30c6b010c48a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/config/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/entity/ServerEntities.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/repository/StationsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/services/GetStations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/config/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/test/java/com/example/datacollectiondispatcher/services/GetStationsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Station Data Collector/src/test/java/com/example/stationdatacollector/services/RecieveCustomerDataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c2246d34-e32d-4517-9948-fc7f525a37de.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c2246d34-e32d-4517-9948-fc7f525a37de.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpringBootApp/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SpringBootApp/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/StationDataCollectorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/StationDataCollectorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/config/DataSourceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/config/DataSourceConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/entity/ChargeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/entity/ChargeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/services/RecieveCustomerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/java/com/example/stationdatacollector/services/RecieveCustomerData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Station Data Collector/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Station Data Collector/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/services/GetStations.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data Collection Dispatcher/src/main/java/com/example/datacollectiondispatcher/services/GetStations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,6 +105,7 @@
       <workItem from="1717767028952" duration="881000" />
       <workItem from="1718025812101" duration="9818000" />
       <workItem from="1718044691320" duration="4913000" />
+      <workItem from="1718307708902" duration="588000" />
     </task>
     <servers />
   </component>
