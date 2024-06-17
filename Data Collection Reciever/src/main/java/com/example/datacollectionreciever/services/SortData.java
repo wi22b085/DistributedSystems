@@ -87,7 +87,7 @@ public class SortData {
             datetime_invoice = datetime_invoice.replace(":", "_");
             datetime_invoice = datetime_invoice.split("\\.")[0];
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'um' HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String datetime = currentDateTime.format(formatter);
 
 

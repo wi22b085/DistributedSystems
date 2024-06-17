@@ -3,8 +3,10 @@ package com.example.pdfgenerator.services;
 import com.example.pdfgenerator.config.DataSourceConfig;
 import com.example.pdfgenerator.config.RabbitMQConfig;
 import com.example.pdfgenerator.entity.CustomerEntity;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -19,6 +21,7 @@ import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.layout.borders.Border;
 
 import com.itextpdf.layout.Document;
 
@@ -140,77 +143,94 @@ public class GeneratePdf {
 
 
 
-    public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
-        String LOREM_IPSUM_TEXT = firstname + lastname  + datetime + sumString1 + sumString2 + sumString3 + totalSumString + cost1 + cost2 + cost3 + totalCost + "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        String GOOGLE_MAPS_PNG = "./google_maps.png";
-        String TARGET_PDF = "./../File Storage/" + customerId + "_" + datetime_invoice + ".pdf";
 
+
+
+
+    public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
+        String car_pic = "./car-photo.jpg";
+        String TARGET_PDF = "./../File Storage/" + customerId + "_" + datetime_invoice + ".pdf";
 
         PdfWriter writer = new PdfWriter(TARGET_PDF);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        Paragraph loremIpsumHeader = new Paragraph("Lorem Ipsum header...")
+
+        ImageData imageData = ImageDataFactory.create(car_pic);
+        Image image = new Image(imageData).scaleToFit(350, 350).setFixedPosition(pdf.getDefaultPageSize().getWidth() - 430, pdf.getDefaultPageSize().getHeight() - 180);
+        document.add(image);
+
+
+        document.add(new Paragraph("\n\n\n\n\n\n\n\n\n"));
+
+
+        Paragraph invoiceHeader = new Paragraph("Invoice")
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
+                .setFontSize(18)
+                .setBold()
+                .setFontColor(ColorConstants.BLACK);
+        document.add(invoiceHeader);
+
+        Paragraph customerDetails = new Paragraph("Customer-ID: " + customerId + "\nCustomer: " + firstname + " " + lastname + "\nInvoice Date: " + datetime)
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
+                .setFontSize(12)
+                .setFontColor(ColorConstants.BLACK);
+        document.add(customerDetails);
+
+
+        document.add(new Paragraph("\n\n\n\n"));
+
+
+        Paragraph tableHeader = new Paragraph("Details")
                 .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                 .setFontSize(14)
                 .setBold()
-                .setFontColor(ColorConstants.RED);
-        document.add(loremIpsumHeader);
-        document.add(new Paragraph(LOREM_IPSUM_TEXT));
-
-        Paragraph listHeader = new Paragraph("Lorem Ipsum ...")
-                .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_BOLD))
-                .setFontSize(14)
-                .setBold()
-                .setFontColor(ColorConstants.BLUE);
-        List list = new List()
-                .setSymbolIndent(12)
-                .setListSymbol("\u2022")
-                .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_BOLD));
-        list.add(new ListItem("lorem ipsum 1"))
-                .add(new ListItem("lorem ipsum 2"))
-                .add(new ListItem("lorem ipsum 3"))
-                .add(new ListItem("lorem ipsum 4"))
-                .add(new ListItem("lorem ipsum 5"))
-                .add(new ListItem("lorem ipsum 6"));
-        document.add(listHeader);
-        document.add(list);
-
-        Paragraph tableHeader = new Paragraph("Lorem Ipsum Table ...")
-                .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN))
-                .setFontSize(18)
-                .setBold()
-                .setFontColor(ColorConstants.GREEN);
+                .setFontColor(ColorConstants.BLACK);
         document.add(tableHeader);
-        Table table = new Table(UnitValue.createPercentArray(4)).useAllAvailableWidth();
-        table.addHeaderCell(getHeaderCell("Ipsum 1"));
-        table.addHeaderCell(getHeaderCell("Ipsum 2"));
-        table.addHeaderCell(getHeaderCell("Ipsum 3"));
-        table.addHeaderCell(getHeaderCell("Ipsum 4"));
-        table.setFontSize(14).setBackgroundColor(ColorConstants.WHITE);
-        table.addCell("lorem 1");
-        table.addCell("lorem 2");
-        table.addCell("lorem 3");
-        table.addCell("lorem 4");
+
+        Table table = new Table(UnitValue.createPercentArray(new float[]{1, 1, 1})).useAllAvailableWidth();
+        table.addHeaderCell(getHeaderCell("Charging Station Nr."));
+        table.addHeaderCell(getHeaderCell("kWh"));
+        table.addHeaderCell(getHeaderCell("Cost"));
+
+        if (!sumString1.equals("0.0") && !cost1.equals("0.0")) {
+            table.addCell("1");
+            table.addCell(sumString1);
+            table.addCell(cost1);
+        }
+        if (!sumString2.equals("0.0") && !cost2.equals("0.0")) {
+            table.addCell("2");
+            table.addCell(sumString2);
+            table.addCell(cost2);
+        }
+        if (!sumString3.equals("0.0") && !cost3.equals("0.0")) {
+            table.addCell("3");
+            table.addCell(sumString3);
+            table.addCell(cost3);
+        }
+
+        // Adding total sum and cost row
+        table.addCell(getTotalCell("Total"));
+        table.addCell(getTotalCell(totalSumString));
+        table.addCell(getTotalCell(totalCost));
+
         document.add(table);
-
-        document.add(new AreaBreak());
-
-        Paragraph imageHeader = new Paragraph("Lorem Ipsum Image ...")
-                .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN))
-                .setFontSize(18)
-                .setBold()
-                .setFontColor(ColorConstants.GREEN);
-        document.add(imageHeader);
-        ImageData imageData = ImageDataFactory.create(GOOGLE_MAPS_PNG);
-        document.add(new Image(imageData));
 
         document.close();
     }
 
     private static Cell getHeaderCell(String s) {
-        return new Cell().add(new Paragraph(s)).setBold().setBackgroundColor(ColorConstants.GRAY);
+        return new Cell().add(new Paragraph(s)).setBold().setBackgroundColor(new DeviceRgb(47, 171, 47));
     }
+
+    private static Cell getTotalCell(String content) {
+        return new Cell().add(new Paragraph(content))
+                .setBold()
+                .setBackgroundColor(new DeviceRgb(47, 171, 47));
+    }
+
+
+
 
 
 
