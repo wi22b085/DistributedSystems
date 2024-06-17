@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -63,29 +64,35 @@ public class GeneratePdf {
         String cost2 = "";
         String cost3 = "";
         String totalCost = "";
+        String datetime = "";
+        String datetime_invoice = "";
 
 
 
 
         for (String part : parts) {
             if (part.startsWith("customerId:")) {
-                customerId = part.split(":")[1];
+                customerId = part.substring("customerId:".length()); // Direkte Verwendung von substring, um den Wert zu extrahieren
             } else if (part.startsWith("sumString1:")) {
-                sumString1 = part.split(":")[1];
+                sumString1 = part.substring("sumString1:".length());
             } else if (part.startsWith("sumString2:")) {
-                sumString2 = part.split(":")[1];
+                sumString2 = part.substring("sumString2:".length());
             } else if (part.startsWith("sumString3:")) {
-                sumString3 = part.split(":")[1];
+                sumString3 = part.substring("sumString3:".length());
             } else if (part.startsWith("totalSumString:")) {
-                totalSumString = part.split(":")[1];
+                totalSumString = part.substring("totalSumString:".length());
             } else if (part.startsWith("cost1:")) {
-                cost1 = part.split(":")[1];
+                cost1 = part.substring("cost1:".length());
             } else if (part.startsWith("cost2:")) {
-                cost2 = part.split(":")[1];
+                cost2 = part.substring("cost2:".length());
             } else if (part.startsWith("cost3:")) {
-                cost3 = part.split(":")[1];
+                cost3 = part.substring("cost3:".length());
             } else if (part.startsWith("totalCost:")) {
-                totalCost = part.split(":")[1];
+                totalCost = part.substring("totalCost:".length());
+            } else if (part.startsWith("datetime:")) {
+                datetime = part.substring("datetime:".length());
+            } else if (part.startsWith("datetime_invoice:")) {
+                datetime_invoice = part.substring("datetime_invoice:".length());
             }
         }
 
@@ -110,8 +117,7 @@ public class GeneratePdf {
             String lastname = output.getLast_name();
 
 
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            String datetime = currentDateTime.toString();
+
 
 
 
@@ -119,7 +125,7 @@ public class GeneratePdf {
 
 
             try {
-                createSpecificPdf(firstname, lastname, datetime, sumString1, sumString2, sumString3, totalSumString, cost1, cost2, cost3, totalCost);
+                createSpecificPdf(datetime_invoice, customerId, firstname, lastname, datetime, sumString1, sumString2, sumString3, totalSumString, cost1, cost2, cost3, totalCost);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,10 +140,11 @@ public class GeneratePdf {
 
 
 
-    public void createSpecificPdf(String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
+    public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
         String LOREM_IPSUM_TEXT = firstname + lastname  + datetime + sumString1 + sumString2 + sumString3 + totalSumString + cost1 + cost2 + cost3 + totalCost + "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         String GOOGLE_MAPS_PNG = "./google_maps.png";
-        String TARGET_PDF = "target.pdf";
+        String TARGET_PDF = "./../File Storage/" + customerId + "_" + datetime_invoice + ".pdf";
+
 
         PdfWriter writer = new PdfWriter(TARGET_PDF);
         PdfDocument pdf = new PdfDocument(writer);

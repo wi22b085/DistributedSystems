@@ -70,6 +70,6 @@ public class RecieveCustomerDataTest {
         verify(rabbitTemplate, times(1)).convertAndSend(queueCaptor.capture(), messageCaptor.capture());
 
         assertThat(queueCaptor.getValue()).isEqualTo(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE);
-        assertThat(messageCaptor.getValue()).isEqualTo("summe:100.0,customerId:1");
+        assertThat(messageCaptor.getValue()).isEqualTo("summe:100.0,customerId:1,chargingStation:1");
     }
 }

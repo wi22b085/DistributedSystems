@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +35,10 @@ public class SortData {
         double sum = 0;
         String customerId = "";
         String chargingStation = "";
-        String sumValue = "";
+        String sumValue = "0";
 
         for (String part : parts) {
-            if (part.startsWith("sum:")) {
+            if (part.startsWith("summe:")) {
                 sumValue = part.split(":")[1];
                 sum = Double.parseDouble(sumValue);
             } else if (part.startsWith("customerId:")) {
@@ -80,11 +82,17 @@ public class SortData {
 
             String totalSumString = String.valueOf(totalSum);
 
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            String datetime_invoice = currentDateTime.toString();
+            datetime_invoice = datetime_invoice.replace(":", "_");
+            datetime_invoice = datetime_invoice.split("\\.")[0];
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'um' HH:mm");
+            String datetime = currentDateTime.format(formatter);
 
 
 
-
-            String pdfMessage = "sumString1:" + sumString1 + ",sumString2:" + sumString2 + ",sumString3:" + sumString3 + ",totalSumString" + totalSumString + ",cost1" + cost1 + ",cost2:" + cost2 + ",cost3:" + cost3 + ",totalcost:" + totalCost + ",customerId:" + customerId;
+            String pdfMessage = "datetime:" + datetime + ",datetime_invoice:" + datetime_invoice + ",sumString1:" + sumString1 + ",sumString2:" + sumString2 + ",sumString3:" + sumString3 + ",totalSumString:" + totalSumString + ",cost1:" + cost1 + ",cost2:" + cost2 + ",cost3:" + cost3 + ",totalCost:" + totalCost + ",customerId:" + customerId;
             rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_DATA_PDF, pdfMessage);
 
             messageStore.remove(customerId + "-1");
@@ -92,6 +100,10 @@ public class SortData {
             messageStore.remove(customerId + "-3");
 
         }
+    }
+
+    public Map<String, String[]> getMessageStore() {
+        return messageStore;
     }
 
 
