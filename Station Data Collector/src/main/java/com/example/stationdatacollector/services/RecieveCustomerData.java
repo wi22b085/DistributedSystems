@@ -78,7 +78,7 @@ public class RecieveCustomerData {
             sum+=out.getKwh();
         }
 
-        String msg="summe:"+sum+",customerId:"+customerId + ", chargingStation:" + chargingStation;
+        String msg="summe:" + sum + ",customerId:" + customerId + ",chargingStation:" + chargingStation;
         System.out.println(msg);
 
         rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE, msg );
