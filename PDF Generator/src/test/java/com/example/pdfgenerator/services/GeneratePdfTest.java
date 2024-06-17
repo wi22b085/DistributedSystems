@@ -49,7 +49,7 @@ public class GeneratePdfTest {
     public void testCreatePdf() throws SQLException, IOException {
 
         // Arrange
-        String message = "datetime:01.01.2000 um 10:10,datetime_invoice:2000-01-01T10_10_10,sumString1:14.0,sumString2:4.18,sumString3:0.0,totalSumString:18.18,cost1:28.0,cost2:8.36,cost3:0.0,totalCost:36.36,customerId:2";
+        String message = "datetime:01.01.2000 10:10,datetime_invoice:2000-01-01T10_10_10,sumString1:14.0,sumString2:4.18,sumString3:0.0,totalSumString:18.18,cost1:28.0,cost2:8.36,cost3:0.0,totalCost:36.36,customerId:2";
         String sql = """
                     SELECT id, first_name,last_name
                     FROM customer 
@@ -73,7 +73,7 @@ public class GeneratePdfTest {
 
         assertThat(Files.exists(path)).isTrue();
 
-        assertPdfContent(path, "Fritzi", "Fratzi", "01.01.2000 um 10:10", "14.0", "4.18", "0.0", "18.18", "28.0", "8.36", "0.0", "36.36");
+        assertPdfContent(path, "Customer-ID: 2", "Customer: Fritzi Fratzi", "Invoice Date: 01.01.2000 10:10", "14.0", "4.18", "18.18", "28.0", "8.36", "36.36");
 
         // .pdf nach Test wieder löschen:
         Files.deleteIfExists(path);

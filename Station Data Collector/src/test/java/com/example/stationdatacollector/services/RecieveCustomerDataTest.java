@@ -54,9 +54,15 @@ public class RecieveCustomerDataTest {
     public void testGetCustomerData_Db1() throws SQLException {
         // Arrange
         String message = "customerId:1,url:30011";
-        String sql = "SELECT id, kwh,customer_id FROM Charge Where customer_id=?";
+        String sql = """
+                    SELECT id, kwh,customer_id
+                    FROM Charge 
+                    Where customer_id=?
+                    """;
         List<ChargeEntity> mockCharges = List.of(new ChargeEntity(1, 100.0, 1));
+
         when(jdbcTemplate1.query(eq(sql), any(Object[].class), any(RowMapper.class))).thenReturn(mockCharges);
+
 
         // Act
         recieveCustomerData.getCustomerData(message);
