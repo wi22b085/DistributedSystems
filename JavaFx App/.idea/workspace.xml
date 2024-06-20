@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98925fcf-e515-4ab3-95e1-28e24aec2b22" name="Changes" comment="" />
+    <list default="true" id="98925fcf-e515-4ab3-95e1-28e24aec2b22" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Data Collection Dispatcher/src/test/java/com/example/datacollectiondispatcher/services/GetStationsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Data Collection Dispatcher/src/test/java/com/example/datacollectiondispatcher/services/GetStationsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Station Data Collector/src/test/java/com/example/stationdatacollector/services/RecieveCustomerDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Station Data Collector/src/test/java/com/example/stationdatacollector/services/RecieveCustomerDataTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="2gmbsigrM5tgw4DEC9pMmgGSo4w" />
   <component name="ProjectViewState">
@@ -25,6 +35,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -52,6 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1716305911464</updated>
       <workItem from="1716305912499" duration="70000" />
+      <workItem from="1718793290523" duration="1381000" />
     </task>
     <servers />
   </component>

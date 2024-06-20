@@ -18,7 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -42,34 +43,94 @@ public class RecieveCustomerDataTest {
     private JdbcTemplate jdbcTemplate3;
 
     @InjectMocks
-    private RecieveCustomerData recieveCustomerData;
+    private RecieveCustomerData receiveCustomerData;
 
     @BeforeEach
     void setUp() {
-        // Initialize the RecieveCustomerData with mocks
-        recieveCustomerData = new RecieveCustomerData(rabbitTemplate, jdbcTemplate1, jdbcTemplate2, jdbcTemplate3);
+        receiveCustomerData = new RecieveCustomerData(rabbitTemplate, jdbcTemplate1, jdbcTemplate2, jdbcTemplate3);
     }
 
     @Test
-    public void testGetCustomerData_Db1() throws SQLException {
+    public void testGetCustomerData() throws SQLException {
         // Arrange
         String message = "customerId:1,url:30011";
-        String sql = "SELECT id, kwh,customer_id FROM Charge Where customer_id=?";
-        List<ChargeEntity> mockCharges = List.of(new ChargeEntity(1, 100.0, 1));
-        when(jdbcTemplate1.query(eq(sql), any(Object[].class), any(RowMapper.class))).thenReturn(mockCharges);
+        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
+        ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
+        ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
+        String sql = """
+                SELECT id, kwh,customer_id
+                    FROM Charge
+                    Where customer_id=?
+                """;
+
+
+        List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
+        when(jdbcTemplate1.query(anyString(), any(RowMapper.class), eq(1)))
+                .thenReturn(mockCharges);
 
         // Act
-        recieveCustomerData.getCustomerData(message);
+        receiveCustomerData.getCustomerData(message);
 
         // Assert
-        verify(jdbcTemplate1, times(1)).query(eq(sql), any(Object[].class), any(RowMapper.class));
 
-        ArgumentCaptor<String> queueCaptor = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
+        verify(rabbitTemplate).convertAndSend(
+                eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
+                eq((Object) "summe:151.1,customerId:1")
+        );
+    }
+    @Test
+    public void testGetCustomerData2() throws SQLException {
+        // Arrange
+        String message = "customerId:1,url:30012";
+        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
+        ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
+        ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
+        String sql = """
+                SELECT id, kwh,customer_id
+                    FROM Charge
+                    Where customer_id=?
+                """;
 
-        verify(rabbitTemplate, times(1)).convertAndSend(queueCaptor.capture(), messageCaptor.capture());
 
-        assertThat(queueCaptor.getValue()).isEqualTo(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE);
-        assertThat(messageCaptor.getValue()).isEqualTo("summe:100.0,customerId:1");
+        List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
+        when(jdbcTemplate2.query(anyString(), any(RowMapper.class), eq(1)))
+                .thenReturn(mockCharges);
+
+        // Act
+        receiveCustomerData.getCustomerData(message);
+
+        // Assert
+        verify(rabbitTemplate).convertAndSend(
+                eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
+                eq((Object) "summe:151.1,customerId:1")
+        );
+    }
+    @Test
+    public void testGetCustomerData3() throws SQLException {
+        // Arrange
+        String message = "customerId:1,url:30013";
+        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
+        ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
+        ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
+        String sql = """
+                SELECT id, kwh,customer_id
+                    FROM Charge
+                    Where customer_id=?
+                """;
+
+
+        List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
+        when(jdbcTemplate3.query(anyString(), any(RowMapper.class), eq(1)))
+                .thenReturn(mockCharges);
+
+        // Act
+        receiveCustomerData.getCustomerData(message);
+
+        // Assert
+
+        verify(rabbitTemplate).convertAndSend(
+                eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
+                eq((Object) "summe:151.1,customerId:1")
+        );
     }
 }

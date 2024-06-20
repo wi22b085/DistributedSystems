@@ -46,16 +46,12 @@ class GetStationsTest {
         getStations.sendStations(message);
 
         // Assert
-        ArgumentCaptor<String> routingKeyCaptor = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
-        verify(rabbitTemplate, times(3)).convertAndSend(routingKeyCaptor.capture(), messageCaptor.capture());
 
-        List<String> capturedMessages = messageCaptor.getAllValues();
-        assertThat(capturedMessages).containsExactly(
-                "customer:1,url:db_url_1",
-                "customer:1,url:db_url_2",
-                message
-        );
+        verify(stationsRepository).findAll();
+        verify(rabbitTemplate).convertAndSend(RabbitMQConfig.ECHO_IN_URL_ID, "customer:1,url:db_url_1");
+        verify(rabbitTemplate).convertAndSend(RabbitMQConfig.ECHO_IN_URL_ID, "customer:1,url:db_url_2");
+        verify(rabbitTemplate).convertAndSend(RabbitMQConfig.ECHO_OUT_USER_ID, message);
+
     }
 
 }
