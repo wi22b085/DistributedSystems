@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Component
 @Slf4j
 public class RecieveCustomerData {
@@ -43,35 +45,40 @@ public class RecieveCustomerData {
                     """;
 
 
+
+
         String[] parts = message.split(",");
         int customerId = Integer.parseInt(parts[0].split(":")[1].trim());
         List<ChargeEntity> output=new ArrayList<>();
+        int chargingStation = 0;
         if (message.contains("30011")){
              output = jdbcTemplate1.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
                      rs.getInt("customer_id")
                      ),customerId);
+            chargingStation = 1;
         } else if (message.contains("30012")) {
            output = jdbcTemplate2.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                    rs.getInt("id"),
                    rs.getDouble("kwh"),
                    rs.getInt("customer_id")
             ),customerId);
-
+            chargingStation = 2;
         } else if (message.contains("30013")) {
             output = jdbcTemplate3.query(sql, (ResultSet rs, int rownumb)-> new ChargeEntity(
                     rs.getInt("id"),
                     rs.getDouble("kwh"),
                     rs.getInt("customer_id")
             ),customerId);
+            chargingStation = 3;
         }
         double sum=0;
         for (ChargeEntity out : output) {
             sum+=out.getKwh();
         }
 
-        String msg="summe:"+sum+",customerId:"+customerId;
+        String msg="summe:" + sum + ",customerId:" + customerId + ",chargingStation:" + chargingStation;
         System.out.println(msg);
 
         rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE, msg );

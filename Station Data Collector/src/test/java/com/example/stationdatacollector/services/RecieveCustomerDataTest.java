@@ -96,6 +96,8 @@ public class RecieveCustomerDataTest {
         when(jdbcTemplate2.query(anyString(), any(RowMapper.class), eq(1)))
                 .thenReturn(mockCharges);
 
+
+
         // Act
         receiveCustomerData.getCustomerData(message);
 
@@ -132,5 +134,6 @@ public class RecieveCustomerDataTest {
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
                 eq((Object) "summe:151.1,customerId:1")
         );
+
     }
 }
