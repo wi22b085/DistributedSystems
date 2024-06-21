@@ -5,11 +5,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,6 +29,7 @@ public class SortData {
 
     @RabbitListener(queues = RabbitMQConfig.ECHO_OUT_QUEUE_VALUE)
     public void sendDataPdf(String message) {
+        System.out.println(message);
         String[] parts = message.split(",");
         double sum = 0;
         String customerId = "";
@@ -53,7 +52,6 @@ public class SortData {
         messageStore.putIfAbsent(key, new String[3]);
 
         String[] storedData = messageStore.get(key);
-
 
         storedData[0] = sumValue;
         storedData[1] = customerId;
@@ -90,8 +88,6 @@ public class SortData {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String datetime = currentDateTime.format(formatter);
 
-
-
             String pdfMessage = "datetime:" + datetime + ",datetime_invoice:" + datetime_invoice + ",sumString1:" + sumString1 + ",sumString2:" + sumString2 + ",sumString3:" + sumString3 + ",totalSumString:" + totalSumString + ",cost1:" + cost1 + ",cost2:" + cost2 + ",cost3:" + cost3 + ",totalCost:" + totalCost + ",customerId:" + customerId;
             rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_DATA_PDF, pdfMessage);
 
@@ -105,6 +101,5 @@ public class SortData {
     public Map<String, String[]> getMessageStore() {
         return messageStore;
     }
-
 
 }

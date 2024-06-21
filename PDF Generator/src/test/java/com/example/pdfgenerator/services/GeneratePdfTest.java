@@ -1,15 +1,11 @@
 package com.example.pdfgenerator.services;
 
-import com.example.pdfgenerator.config.RabbitMQConfig;
 import com.example.pdfgenerator.entity.CustomerEntity;
-
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,16 +13,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.io.IOException;
 import java.nio.file.Files;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -60,8 +51,6 @@ public class GeneratePdfTest {
         CustomerEntity mockCustomer = new CustomerEntity(2, "Fritzi", "Fratzi");
         when(jdbcTemplate.queryForObject(eq(sql), any(Object[].class), any(RowMapper.class))).thenReturn(mockCustomer);
 
-
-
         // Act
         generatePdf.generatePdfMethod(message);
 
@@ -76,7 +65,7 @@ public class GeneratePdfTest {
         assertPdfContent(path, "Customer-ID: 2", "Customer: Fritzi Fratzi", "Invoice Date: 01.01.2000 10:10", "14.0", "4.18", "18.18", "28.0", "8.36", "36.36");
 
         // .pdf nach Test wieder löschen:
-        Files.deleteIfExists(path);
+        //Files.deleteIfExists(path);
 
     }
 
@@ -95,5 +84,4 @@ public class GeneratePdfTest {
             }
         }
     }
-
 }

@@ -11,9 +11,9 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
     @Bean(name="Db")
-    public JdbcTemplate jdbcTemplate1(){
+    public JdbcTemplate jdbcTemplate(){
         HikariConfig hikariConfig=new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:30014/customerdb");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:30001/customerdb");
         hikariConfig.setUsername("postgres");
         hikariConfig.setPassword("postgres");
         DataSource dataSource=new HikariDataSource(hikariConfig);
