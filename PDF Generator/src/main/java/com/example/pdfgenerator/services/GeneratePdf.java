@@ -6,7 +6,6 @@ import com.example.pdfgenerator.entity.CustomerEntity;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -15,30 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.layout.borders.Border;
-
 import com.itextpdf.layout.Document;
-
 import com.itextpdf.layout.properties.UnitValue;
-
 import java.io.IOException;
-
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.Map;
-
-
-
 
 @Component
 @Slf4j
@@ -56,6 +40,7 @@ public class GeneratePdf {
 
     @RabbitListener(queues = RabbitMQConfig.ECHO_OUT_DATA_PDF)
     public void generatePdfMethod(String message) {
+        System.out.println(message);
         String[] parts = message.split(",");
 
         String customerId = "";
@@ -69,9 +54,6 @@ public class GeneratePdf {
         String totalCost = "";
         String datetime = "";
         String datetime_invoice = "";
-
-
-
 
         for (String part : parts) {
             if (part.startsWith("customerId:")) {
@@ -99,7 +81,6 @@ public class GeneratePdf {
             }
         }
 
-
             var sql = """
                     SELECT id, first_name,last_name
                     FROM customer 
@@ -119,50 +100,26 @@ public class GeneratePdf {
             String firstname = output.getFirst_name();
             String lastname = output.getLast_name();
 
-
-
-
-
-
-
-
-
             try {
                 createSpecificPdf(datetime_invoice, customerId, firstname, lastname, datetime, sumString1, sumString2, sumString3, totalSumString, cost1, cost2, cost3, totalCost);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
 
-
-
-
-
-
-
-
-
-
-
-
     public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
-        String car_pic = "./car-photo.jpg";
+        String car_pic = "./car-photo.jpg"; // Photo from https://media.istockphoto.com/id/1357793078/vector/electric-plug-icon-electrical-plug-with-lighting-symbol-green-energy-logo-or-icon-vector.jpg?s=612x612&w=0&k=20&c=0U_z7e5tLDI29X7zesUckLKoMp_mfbsCEWtL4ub6rCo=
         String TARGET_PDF = "./../File Storage/" + customerId + "_" + datetime_invoice + ".pdf";
 
         PdfWriter writer = new PdfWriter(TARGET_PDF);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-
         ImageData imageData = ImageDataFactory.create(car_pic);
         Image image = new Image(imageData).scaleToFit(350, 350).setFixedPosition(pdf.getDefaultPageSize().getWidth() - 430, pdf.getDefaultPageSize().getHeight() - 180);
         document.add(image);
 
-
         document.add(new Paragraph("\n\n\n\n\n\n\n\n\n"));
-
 
         Paragraph invoiceHeader = new Paragraph("Invoice")
                 .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
@@ -176,7 +133,6 @@ public class GeneratePdf {
                 .setFontSize(12)
                 .setFontColor(ColorConstants.BLACK);
         document.add(customerDetails);
-
 
         document.add(new Paragraph("\n\n\n\n"));
 
@@ -228,12 +184,4 @@ public class GeneratePdf {
                 .setBold()
                 .setBackgroundColor(new DeviceRgb(47, 171, 47));
     }
-
-
-
-
-
-
-
-
 }
