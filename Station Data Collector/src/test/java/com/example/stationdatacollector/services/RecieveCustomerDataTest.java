@@ -59,7 +59,7 @@ public class RecieveCustomerDataTest {
         ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
         String sql = """
                 SELECT id, kwh,customer_id
-                    FROM Charge
+                    FROM charge
                     Where customer_id=?
                 """;
 
@@ -75,7 +75,7 @@ public class RecieveCustomerDataTest {
 
         verify(rabbitTemplate).convertAndSend(
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
-                eq((Object) "summe:151.1,customerId:1")
+                eq((Object) "summe:151.1,customerId:1,chargingStation:1")
         );
     }
     @Test
@@ -104,7 +104,7 @@ public class RecieveCustomerDataTest {
         // Assert
         verify(rabbitTemplate).convertAndSend(
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
-                eq((Object) "summe:151.1,customerId:1")
+                eq((Object) "summe:151.1,customerId:1,chargingStation:2")
         );
     }
     @Test
@@ -132,7 +132,7 @@ public class RecieveCustomerDataTest {
 
         verify(rabbitTemplate).convertAndSend(
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
-                eq((Object) "summe:151.1,customerId:1")
+                eq((Object) "summe:151.1,customerId:1,chargingStation:3")
         );
 
     }
