@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98925fcf-e515-4ab3-95e1-28e24aec2b22" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data Collection Dispatcher/src/test/java/com/example/datacollectiondispatcher/services/GetStationsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Data Collection Dispatcher/src/test/java/com/example/datacollectiondispatcher/services/GetStationsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../File Storage/2_2000-01-01T10_10_10.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Station Data Collector/src/main/java/com/example/stationdatacollector/services/RecieveCustomerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Station Data Collector/src/main/java/com/example/stationdatacollector/services/RecieveCustomerData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Station Data Collector/src/test/java/com/example/stationdatacollector/services/RecieveCustomerDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Station Data Collector/src/test/java/com/example/stationdatacollector/services/RecieveCustomerDataTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,22 +24,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="JavaFx App" />
