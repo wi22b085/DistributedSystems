@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 
-public class HelloController {
+public class InvoiceController {
     @FXML
     private Label welcomeText;
 
