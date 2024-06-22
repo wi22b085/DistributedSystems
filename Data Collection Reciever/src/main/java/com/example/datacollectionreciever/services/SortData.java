@@ -31,7 +31,6 @@ public class SortData {
     public void sendDataPdf(String message) {
         System.out.println(message);
         String[] parts = message.split(",");
-        double sum = 0;
         String customerId = "";
         String chargingStation = "";
         String sumValue = "0";
@@ -39,7 +38,6 @@ public class SortData {
         for (String part : parts) {
             if (part.startsWith("summe:")) {
                 sumValue = part.split(":")[1];
-                sum = Double.parseDouble(sumValue);
             } else if (part.startsWith("customerId:")) {
                 customerId = part.split(":")[1];
             } else if (part.startsWith("chargingStation:")) {
@@ -67,28 +65,39 @@ public class SortData {
             double sum2 = Double.parseDouble(message2[0]);
             double sum3 = Double.parseDouble(message3[0]);
 
-            double totalSum = sum1 + sum2 + sum3;
+            sum1 = Math.round(sum1 * 100.0) / 100.0;
+            sum2 = Math.round(sum2 * 100.0) / 100.0;
+            sum3 = Math.round(sum3 * 100.0) / 100.0;
 
-            String cost1 = String.valueOf(sum1 * 2);
-            String cost2 = String.valueOf(sum2 * 2);
-            String cost3 = String.valueOf(sum3 * 2);
-            String totalCost = String.valueOf(totalSum * 2);
+            double totalSum = sum1 + sum2 + sum3;
+            totalSum = Math.round(totalSum * 100.0) / 100.0;
+
+            double cost1 = sum1 * 0.3;
+            double cost2 = sum2 * 0.3;
+            double cost3 = sum3 * 0.3;
+
+            cost1 = Math.round(cost1 * 100.0) / 100.0;
+            cost2 = Math.round(cost2 * 100.0) / 100.0;
+            cost3 = Math.round(cost3 * 100.0) / 100.0;
+
+            double totalCost = cost1 + cost2 + cost3;
+            totalCost = Math.round(totalCost * 100.0) / 100.0;
 
             String sumString1 = String.valueOf(sum1);
             String sumString2 = String.valueOf(sum2);
             String sumString3 = String.valueOf(sum3);
-
             String totalSumString = String.valueOf(totalSum);
 
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            String datetime_invoice = currentDateTime.toString();
-            datetime_invoice = datetime_invoice.replace(":", "_");
-            datetime_invoice = datetime_invoice.split("\\.")[0];
+            String costString1 = String.valueOf(cost1);
+            String costString2 = String.valueOf(cost2);
+            String costString3 = String.valueOf(cost3);
+            String totalCostString = String.valueOf(totalCost);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'at' HH:mm");
             String datetime = currentDateTime.format(formatter);
 
-            String pdfMessage = "datetime:" + datetime + ",datetime_invoice:" + datetime_invoice + ",sumString1:" + sumString1 + ",sumString2:" + sumString2 + ",sumString3:" + sumString3 + ",totalSumString:" + totalSumString + ",cost1:" + cost1 + ",cost2:" + cost2 + ",cost3:" + cost3 + ",totalCost:" + totalCost + ",customerId:" + customerId;
+            String pdfMessage = "datetime:" + datetime + ",sumString1:" + sumString1 + ",sumString2:" + sumString2 + ",sumString3:" + sumString3 + ",totalSumString:" + totalSumString + ",cost1:" + costString1 + ",cost2:" + costString2 + ",cost3:" + costString3 + ",totalCost:" + totalCostString + ",customerId:" + customerId;
             rabbit.convertAndSend(RabbitMQConfig.ECHO_OUT_DATA_PDF, pdfMessage);
 
             messageStore.remove(customerId + "-1");
