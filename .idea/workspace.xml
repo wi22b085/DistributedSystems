@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1ccac039-afe7-4071-be9c-30c6b010c48a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaFXApp/src/main/java/com/example/javafxapp/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaFXApp/src/main/java/com/example/javafxapp/InvoiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SpringBootApp/src/main/java/com/example/springbootapp/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dokumentation.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Dokumentation.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
