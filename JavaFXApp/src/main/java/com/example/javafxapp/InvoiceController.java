@@ -9,8 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
@@ -47,7 +49,15 @@ public class InvoiceController {
                     if (getConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                         System.out.println("Invoice generated for customer ID: " + customerId);
                         invoiceTable.getItems().add(new Invoice(customerId, createViewInvoiceButton(customerId)));
-                        if (viewInvoice(customerId)) {
+
+                        BufferedReader in = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
+                        String inputLine;
+                        String filePath ;
+                        filePath = in.readLine();
+                        in.close();
+
+                        System.out.println("filePath"+filePath);
+                        if (viewInvoice(filePath.toString())) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Information");
                             alert.setHeaderText(null);
@@ -87,10 +97,8 @@ public class InvoiceController {
         return button;
     }
 
-    private boolean viewInvoice(String customerId) throws IOException {
-        String filePath = "files/Customer_" + customerId + "_" + LocalDate.now() + ".pdf";
+    private boolean viewInvoice(String filePath) throws IOException {
         File file = new File(filePath);
-
         if (file.exists()) {
             if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(file);
@@ -99,7 +107,7 @@ public class InvoiceController {
                 showAlert(Alert.AlertType.ERROR, "Error", "Unsupported Operation", "Desktop is not supported on this system.");
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "File Not Found", "The invoice file for customer ID " + customerId + " was not found.");
+            showAlert(Alert.AlertType.ERROR, "Error", "File Not Found", "The invoice file for customer ID " + filePath + " was not found.");
         }
         return false;
     }
