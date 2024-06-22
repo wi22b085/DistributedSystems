@@ -28,14 +28,14 @@ public class InvoiceController {
     @FXML
     private TableView<Invoice> invoiceTable;
 
-    private final String BASE_URL = "http://localhost:8080/invoices/";
+    private final String BASE_URL = "http://localhost:8081/invoices/";
 
     @FXML
     protected void onClickGenerateInvoice() {
         String customerId = customerIdField.getText();
         if (!customerId.isEmpty()) {
             try {
-                URL url = new URL(BASE_URL + customerId);
+                URL url = new URL(BASE_URL + customerId.toString());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
 
