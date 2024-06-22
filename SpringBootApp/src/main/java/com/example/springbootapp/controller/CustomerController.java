@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.time.LocalDate;
 
 @RestController
 public class CustomerController {
     private final RabbitTemplate rabbit;
+    private int id;
     @Autowired
     public CustomerController(RabbitTemplate rabbit) {
         this.rabbit = rabbit;
@@ -24,37 +26,31 @@ public class CustomerController {
 
     @GetMapping("/details/{id}")
     public void getCustomer(@PathVariable int id) {
-        //if (checkFile(id)){
-
-
-        //}else {
-
+            this.id=id;
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
-        //}
+
     }
-    /*
-    public boolean checkFile(int id){
-        boolean val=true;
-        File f = new File("../../../../../../FileStorage/"+id+".pdf");
-        if(f.exists() && !f.isDirectory()) {
-            Path path=f.toPath();
-            sendInvoice(path);
-            return true;
+    public String  checkFile(int id){
+        File f = new File("./../File Storage/");
+        File[] files = f.listFiles((dir, name) -> name.startsWith(String.valueOf(id)) && name.endsWith(".pdf")&& name.contains(LocalDate.now().toString()));
+        System.out.println(files);
+        if (files != null && files.length > 0) {
+            return files[0].getAbsolutePath();
+        } else {
+            return null;
         }
-
-
-        return val;
     }
 
 
     @PostMapping("/pdfValue")
-    public File sendInvoice(Path path){
-        ;
+    public String sendInvoice(Path path){
+        String pdfPath=checkFile(id);
+
+        if (pdfPath != null) {
+            return pdfPath;
+        } else {
+            return "PDF not found for customer ID: " + id;
+        }
     }
-    */
-
-
-     */
-
 
 }

@@ -23,6 +23,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.properties.UnitValue;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 @Component
 @Slf4j
@@ -111,7 +112,7 @@ public class GeneratePdf {
 
     public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
         String car_pic = "./car-photo.jpg"; // Photo from https://media.istockphoto.com/id/1357793078/vector/electric-plug-icon-electrical-plug-with-lighting-symbol-green-energy-logo-or-icon-vector.jpg?s=612x612&w=0&k=20&c=0U_z7e5tLDI29X7zesUckLKoMp_mfbsCEWtL4ub6rCo=
-        String TARGET_PDF = "./../File Storage/" + customerId + "_" + datetime_invoice + ".pdf";
+        String TARGET_PDF = "./../File Storage/" + customerId + "_" +  LocalDate.now() + ".pdf";
 
         PdfWriter writer = new PdfWriter(TARGET_PDF);
         PdfDocument pdf = new PdfDocument(writer);
