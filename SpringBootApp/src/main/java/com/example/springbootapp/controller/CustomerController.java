@@ -25,7 +25,8 @@ public class CustomerController {
         this.rabbit = rabbit;
     }
 
-    @GetMapping("/invoices/{id}")
+
+    @PostMapping("/invoices/{id}")
     public void getCustomer(@PathVariable int id) {
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
 
@@ -41,7 +42,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/invoices/{id}")
+    @GetMapping("/invoices/{id}")
     public ResponseEntity<String>  sendInvoice(@PathVariable int id){
         String pdfPath=checkFile(id);
 
