@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +20,13 @@ import java.time.LocalDate;
 @RestController
 public class CustomerController {
     private final RabbitTemplate rabbit;
-    private int id;
     @Autowired
     public CustomerController(RabbitTemplate rabbit) {
         this.rabbit = rabbit;
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/invoices/{id}")
     public void getCustomer(@PathVariable int id) {
-            this.id=id;
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
 
     }
@@ -35,22 +35,20 @@ public class CustomerController {
         File[] files = f.listFiles((dir, name) -> name.startsWith(String.valueOf(id)) && name.endsWith(".pdf")&& name.contains(LocalDate.now().toString()));
         System.out.println(files);
         if (files != null && files.length > 0) {
-            return files[0].getAbsolutePath();
+            return files[0].getPath();
         } else {
             return null;
         }
     }
 
-
-    @PostMapping("/pdfValue")
-    public String sendInvoice(Path path){
+    @PostMapping("/invoices/{id}")
+    public ResponseEntity<String>  sendInvoice(@PathVariable int id){
         String pdfPath=checkFile(id);
 
         if (pdfPath != null) {
-            return pdfPath;
+            return ResponseEntity.ok(pdfPath);
         } else {
-            return "PDF not found for customer ID: " + id;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
