@@ -24,12 +24,13 @@ public class CustomerController {
 
     @GetMapping("/details/{id}")
     public void getCustomer(@PathVariable int id) {
-        if (checkFile(id)){
+        //if (checkFile(id)){
 
-        }else {
+       // }else {
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
-        }
+        //}
     }
+    /*
     public boolean checkFile(int id){
         boolean val=true;
         File f = new File("../../../../../../FileStorage/"+id+".pdf");
@@ -50,6 +51,8 @@ public class CustomerController {
 
         return ;
     }
+    */
+
 
 
 }
