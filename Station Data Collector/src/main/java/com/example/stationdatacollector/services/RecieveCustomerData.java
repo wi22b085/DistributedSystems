@@ -40,7 +40,7 @@ public class RecieveCustomerData {
         System.out.println(message);
         var sql= """
                     SELECT id, kwh,customer_id
-                    FROM Charge 
+                    FROM charge 
                     Where customer_id=?
                     """;
 

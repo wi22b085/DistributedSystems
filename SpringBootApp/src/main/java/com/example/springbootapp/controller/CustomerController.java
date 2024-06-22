@@ -26,7 +26,9 @@ public class CustomerController {
     public void getCustomer(@PathVariable int id) {
         //if (checkFile(id)){
 
-       // }else {
+
+        //}else {
+
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
         //}
     }
@@ -47,12 +49,12 @@ public class CustomerController {
 
     @PostMapping("/pdfValue")
     public File sendInvoice(Path path){
-
-
-        return ;
+        ;
     }
     */
 
+
+     */
 
 
 }
