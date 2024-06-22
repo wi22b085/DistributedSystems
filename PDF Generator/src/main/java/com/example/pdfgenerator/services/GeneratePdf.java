@@ -54,11 +54,10 @@ public class GeneratePdf {
         String cost3 = "";
         String totalCost = "";
         String datetime = "";
-        String datetime_invoice = "";
 
         for (String part : parts) {
             if (part.startsWith("customerId:")) {
-                customerId = part.substring("customerId:".length()); // Direkte Verwendung von substring, um den Wert zu extrahieren
+                customerId = part.substring("customerId:".length());
             } else if (part.startsWith("sumString1:")) {
                 sumString1 = part.substring("sumString1:".length());
             } else if (part.startsWith("sumString2:")) {
@@ -77,8 +76,6 @@ public class GeneratePdf {
                 totalCost = part.substring("totalCost:".length());
             } else if (part.startsWith("datetime:")) {
                 datetime = part.substring("datetime:".length());
-            } else if (part.startsWith("datetime_invoice:")) {
-                datetime_invoice = part.substring("datetime_invoice:".length());
             }
         }
 
@@ -104,13 +101,16 @@ public class GeneratePdf {
             String lastname = output.getLast_name();
 
             try {
-                createSpecificPdf(datetime_invoice, customerId, firstname, lastname, datetime, sumString1, sumString2, sumString3, totalSumString, cost1, cost2, cost3, totalCost);
+                createSpecificPdf(customerId, firstname, lastname, datetime, sumString1, sumString2, sumString3, totalSumString, cost1, cost2, cost3, totalCost);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-    public void createSpecificPdf(String datetime_invoice, String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
+    public void createSpecificPdf(String customerId, String firstname, String lastname, String datetime, String sumString1, String sumString2, String sumString3, String totalSumString, String cost1, String cost2, String cost3, String totalCost) throws IOException {
+
+        // Structure of this function from Tutorium: https://moodle.technikum-wien.at/mod/resource/view.php?id=1537449
+
         String car_pic = "./car-photo.jpg"; // Photo from https://media.istockphoto.com/id/1357793078/vector/electric-plug-icon-electrical-plug-with-lighting-symbol-green-energy-logo-or-icon-vector.jpg?s=612x612&w=0&k=20&c=0U_z7e5tLDI29X7zesUckLKoMp_mfbsCEWtL4ub6rCo=
         String TARGET_PDF = "./../File Storage/" + customerId + "_" +  LocalDate.now() + ".pdf";
 
@@ -168,10 +168,9 @@ public class GeneratePdf {
             table.addCell(cost3);
         }
 
-        // Adding total sum and cost row
         table.addCell(getTotalCell("Total"));
-        table.addCell(getTotalCell(totalSumString));
-        table.addCell(getTotalCell(totalCost));
+        table.addCell(getTotalCell(totalSumString + " kWh"));
+        table.addCell(getTotalCell(totalCost + " €"));
 
         document.add(table);
 

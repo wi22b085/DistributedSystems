@@ -27,20 +27,15 @@ public class SortDataTest {
     public void testSendPdfData() throws SQLException {
 
         // Arrange
-        String message1 = "summe:14.0,customerId:2,chargingStation:1";
-        String message2 = "summe:4.18,customerId:2,chargingStation:2";
+        String message1 = "summe:14.2,customerId:2,chargingStation:1";
+        String message2 = "summe:4.1,customerId:2,chargingStation:2";
 
-        String message4 = "summe:3.0,customerId:1,chargingStation:1";
+        String message4 = "summe:3.1,customerId:1,chargingStation:1";
 
         String message3 = "summe:0.0,customerId:2,chargingStation:3";
 
         LocalDateTime currentDateTime = LocalDateTime.now();
-
-        String datetime_invoice = currentDateTime.toString();
-        datetime_invoice = datetime_invoice.replace(":", "_");
-        datetime_invoice = datetime_invoice.split("\\.")[0];
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'um' HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'at' HH:mm");
         String datetime = currentDateTime.format(formatter);
 
         // Act
@@ -58,7 +53,7 @@ public class SortDataTest {
         verify(rabbitTemplate, times(1)).convertAndSend(queueCaptor.capture(), messageCaptor.capture());
 
         assertThat(queueCaptor.getValue()).isEqualTo(RabbitMQConfig.ECHO_OUT_DATA_PDF);
-        assertThat(messageCaptor.getValue()).isEqualTo("datetime:" + datetime + ",datetime_invoice:" + datetime_invoice + ",sumString1:14.0,sumString2:4.18,sumString3:0.0,totalSumString:18.18,cost1:28.0,cost2:8.36,cost3:0.0,totalCost:36.36,customerId:2");
+        assertThat(messageCaptor.getValue()).isEqualTo("datetime:" + datetime + ",sumString1:14.2,sumString2:4.1,sumString3:0.0,totalSumString:18.3,cost1:4.26,cost2:1.23,cost3:0.0,totalCost:5.49,customerId:2");
 
         assertThat(sortData.getMessageStore().containsKey("2-1")).isFalse();
         assertThat(sortData.getMessageStore().containsKey("2-2")).isFalse();
