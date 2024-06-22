@@ -81,6 +81,8 @@ public class GeneratePdf {
             }
         }
 
+            int customerIdInt = Integer.parseInt(customerId);
+
             var sql = """
                     SELECT id, first_name,last_name
                     FROM customer 
@@ -89,7 +91,7 @@ public class GeneratePdf {
 
             CustomerEntity output = null;
 
-            output = jdbcTemplate.queryForObject(sql, new Object[]{customerId}, (ResultSet rs, int rowNum) ->
+            output = jdbcTemplate.queryForObject(sql, new Object[]{customerIdInt}, (ResultSet rs, int rowNum) ->
                     new CustomerEntity(
                             rs.getInt("id"),
                             rs.getString("first_name"),

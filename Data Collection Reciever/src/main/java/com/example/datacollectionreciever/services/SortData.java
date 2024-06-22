@@ -49,7 +49,7 @@ public class SortData {
 
         String key = customerId + "-" + chargingStation;
 
-        messageStore.putIfAbsent(key, new String[3]);
+        messageStore.put(key, new String[3]);
 
         String[] storedData = messageStore.get(key);
 
