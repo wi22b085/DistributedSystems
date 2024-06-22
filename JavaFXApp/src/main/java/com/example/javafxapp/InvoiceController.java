@@ -32,6 +32,8 @@ public class InvoiceController {
 
     private final String BASE_URL = "http://localhost:8081/invoices/";
 
+    private String filepath;
+
     @FXML
     protected void onClickGenerateInvoice() {
         String customerId = customerIdField.getText();
@@ -55,7 +57,7 @@ public class InvoiceController {
                         String filePath ;
                         filePath = in.readLine();
                         in.close();
-
+                        this.filepath = filePath;
                         System.out.println("filePath"+filePath);
                         if (viewInvoice(filePath.toString())) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -88,7 +90,7 @@ public class InvoiceController {
         Button button = new Button("View");
         button.setOnAction(event -> {
             try {
-                viewInvoice(customerId);
+                viewInvoice(filepath);
             } catch (IOException e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Error", "Unable to open invoice", e.getMessage());
