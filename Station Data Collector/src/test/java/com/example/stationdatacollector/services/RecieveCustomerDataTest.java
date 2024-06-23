@@ -57,12 +57,6 @@ public class RecieveCustomerDataTest {
         ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
         ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
         ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
-        String sql = """
-                SELECT id, kwh,customer_id
-                    FROM charge
-                    Where customer_id=?
-                """;
-
 
         List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
         when(jdbcTemplate1.query(anyString(), any(RowMapper.class), eq(1)))
@@ -82,15 +76,9 @@ public class RecieveCustomerDataTest {
     public void testGetCustomerData2() throws SQLException {
         // Arrange
         String message = "customerId:1,url:30012";
-        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
+        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.1, 1);
         ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
         ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
-        String sql = """
-                SELECT id, kwh,customer_id
-                    FROM Charge
-                    Where customer_id=?
-                """;
-
 
         List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
         when(jdbcTemplate2.query(anyString(), any(RowMapper.class), eq(1)))
@@ -104,22 +92,16 @@ public class RecieveCustomerDataTest {
         // Assert
         verify(rabbitTemplate).convertAndSend(
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
-                eq((Object) "summe:151.1,customerId:1,chargingStation:2")
+                eq((Object) "summe:151.2,customerId:1,chargingStation:2")
         );
     }
     @Test
     public void testGetCustomerData3() throws SQLException {
         // Arrange
         String message = "customerId:1,url:30013";
-        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.0, 1);
+        ChargeEntity chargeEntity1 = new ChargeEntity(1, 100.2, 1);
         ChargeEntity chargeEntity2 = new ChargeEntity(2, 20.0, 1);
         ChargeEntity chargeEntity3 = new ChargeEntity(3, 31.1, 1);
-        String sql = """
-                SELECT id, kwh,customer_id
-                    FROM Charge
-                    Where customer_id=?
-                """;
-
 
         List<ChargeEntity> mockCharges = List.of(chargeEntity1, chargeEntity2, chargeEntity3);
         when(jdbcTemplate3.query(anyString(), any(RowMapper.class), eq(1)))
@@ -132,7 +114,7 @@ public class RecieveCustomerDataTest {
 
         verify(rabbitTemplate).convertAndSend(
                 eq(RabbitMQConfig.ECHO_OUT_QUEUE_VALUE),
-                eq((Object) "summe:151.1,customerId:1,chargingStation:3")
+                eq((Object) "summe:151.3,customerId:1,chargingStation:3")
         );
 
     }
