@@ -29,7 +29,6 @@ public class CustomerController {
     @PostMapping("/invoices/{id}")
     public void getCustomer(@PathVariable int id) {
             rabbit.convertAndSend(RabbitMQConfig.ECHO_IN_QUEUE_ID, id);
-
     }
     public String  checkFile(int id){
         File f = new File("./../File Storage/");
