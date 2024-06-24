@@ -44,7 +44,6 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-        //rabbitTemplate.setDefaultReceiveQueue(ECHO_IN_URL_ID);
         return rabbitTemplate;
     }
 
