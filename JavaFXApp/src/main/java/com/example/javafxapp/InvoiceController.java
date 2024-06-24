@@ -18,14 +18,9 @@ import java.net.URL;
 import java.time.LocalDate;
 
 public class InvoiceController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
     private TextField customerIdField;
-
-    @FXML
-    private Button generateInvoiceButton;
 
     @FXML
     private TableView<Invoice> invoiceTable;
@@ -39,7 +34,7 @@ public class InvoiceController {
         String customerId = customerIdField.getText();
         if (!customerId.isEmpty()) {
             try {
-                URL url = new URL(BASE_URL + customerId.toString());
+                URL url = new URL(BASE_URL + customerId);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
 
@@ -50,7 +45,7 @@ public class InvoiceController {
                     HttpURLConnection getConnection = getResponseGETRequest(customerId);
                     if (getConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                         System.out.println("Invoice generated for customer ID: " + customerId);
-                        invoiceTable.getItems().add(new Invoice(customerId, createViewInvoiceButton(customerId)));
+                        invoiceTable.getItems().add(new Invoice(customerId, createViewInvoiceButton()));
 
                         BufferedReader in = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
                         String inputLine;
@@ -86,7 +81,7 @@ public class InvoiceController {
         return connection;
     }
 
-    private Button createViewInvoiceButton(String customerId) {
+    private Button createViewInvoiceButton() {
         Button button = new Button("View");
         button.setOnAction(event -> {
             try {

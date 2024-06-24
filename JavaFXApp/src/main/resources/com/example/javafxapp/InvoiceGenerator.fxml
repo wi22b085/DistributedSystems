@@ -9,43 +9,42 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxapp.InvoiceController">
-   <bottom>
-
-  <TableView fx:id="invoiceTable">
-    <columns>
-      <TableColumn fx:id="customerIdColumn" prefWidth="213.0" text="Customer ID">
-        <cellValueFactory>
-          <PropertyValueFactory property="customerId" />
-        </cellValueFactory>
-      </TableColumn>
-      <TableColumn fx:id="viewButtonColumn" prefWidth="92.0" text="View">
-        <cellValueFactory>
-          <PropertyValueFactory property="viewButton" />
-        </cellValueFactory>
-      </TableColumn>
-    </columns>
-  </TableView>
-   </bottom>
-   <top>
-  <Label fx:id="welcomeText" style="-fx-font-size: 24px;" text="Generate Invoice" BorderPane.alignment="CENTER" />
-   </top>
-   <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-        <TextField fx:id="customerIdField" promptText="Enter Customer ID">
-               <HBox.margin>
-                  <Insets left="20.0" top="35.0" />
-               </HBox.margin></TextField>
-        <Button onAction="#onClickGenerateInvoice" text="Generate Invoice">
-               <HBox.margin>
-                  <Insets left="20.0" top="35.0" />
-               </HBox.margin></Button>
-         </children>
-         <BorderPane.margin>
-            <Insets top="20.0" />
-         </BorderPane.margin>
-      </HBox>
-   </center>
+    <top>
+        <Label fx:id="welcomeText" style="-fx-font-size: 24px; -fx-padding: 20px;" text="Generate Invoice" BorderPane.alignment="CENTER" />
+    </top>
+    <center>
+        <VBox spacing="20" alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <HBox spacing="10" alignment="CENTER">
+                    <children>
+                        <TextField fx:id="customerIdField" promptText="Enter Customer ID" />
+                        <Button onAction="#onClickGenerateInvoice" text="Generate Invoice" />
+                    </children>
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
+                </HBox>
+                <TableView fx:id="invoiceTable">
+                    <columns>
+                        <TableColumn fx:id="customerIdColumn" prefWidth="213.0" text="Customer ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="customerId" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="viewButtonColumn" prefWidth="92.0" text="View">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="viewButton" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
+    <padding>
+        <Insets left="20" right="20" bottom="20" top="20" />
+    </padding>
 </BorderPane>
